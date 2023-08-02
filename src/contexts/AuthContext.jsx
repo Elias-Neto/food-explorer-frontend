@@ -4,8 +4,6 @@ import { toast } from 'react-toastify'
 
 import api from '../services/api'
 
-import PropTypes from 'prop-types';
-
 const AuthContext = createContext({})
 
 const AuthProvider = ({ children }) => {
@@ -66,10 +64,6 @@ const AuthProvider = ({ children }) => {
     </ AuthContext.Provider>
   )
 }
-
-AuthProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 const useAuth = () => {
   const context = useContext(AuthContext)
