@@ -3,13 +3,12 @@ import { useNavigate } from 'react-router-dom'
 
 import { toast } from 'react-toastify'
 
-import { Input } from '../../components/Input'
-import { Button } from '../../components/Button'
-import { TextLink } from '../../components/TextLink'
+import { Input } from '../../components/Form/Input'
+import { Button } from '../../components/Form/Button'
+import { TextLink } from '../../components/common/TextLink'
+import { Logo } from '../../components/common/Logo'
 
 import { Container, Form } from './styles'
-
-import logo from '../../assets/logo.svg'
 
 import { useSignIn } from '../../hooks/authentication/useSignIn'
 
@@ -55,10 +54,7 @@ const SignIn = () => {
 
   return (
     <Container>
-      <h1>
-        <img src={logo} alt='Logo do Food Explorer' />
-        food explorer
-      </h1>
+      <Logo />
 
       <Form onSubmit={(e) => e.preventDefault()}>
         <h2>Faça login</h2>

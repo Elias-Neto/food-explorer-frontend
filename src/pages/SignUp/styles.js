@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { topToBottom, rightToLeft } from '../../styles/animations'
+import { rightToLeft } from '../../styles/animations'
 
-export const Container = styled.div`
+const Container = styled.div`
   margin: auto;
   overflow: hidden;
   min-height: 100vh;
@@ -14,26 +14,13 @@ export const Container = styled.div`
   justify-content: center;
   gap: 7.2rem;
 
-  h1 {
-    font-weight: 700;
-    color: ${({ theme }) => theme.LIGHT[100]};
-    font-size: clamp(3.2rem, 2.2rem + 3.125vw, 4.2rem);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-
-    animation: ${topToBottom} 700ms ease-in-out;
-  }
-
   @media (min-width: 1024px) {
     flex-direction: row;
     justify-content: space-between;
   }
 `
 
-export const Form = styled.form`
+const Form = styled.form`
   width: 100%;
   margin: 0 auto;
   max-width: 50rem;
@@ -75,3 +62,5 @@ export const Form = styled.form`
     }
   }
 `
+
+export { Container, Form }

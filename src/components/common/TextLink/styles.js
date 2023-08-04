@@ -11,10 +11,6 @@ export const Container = styled(Link)`
   display: flex;
   align-items: center;
 
-  &:hover {
-    color: ${({ theme }) => theme.TINTS.CAKE[200]};
-  }
-
   svg {
     font-size: 3rem;
   }
