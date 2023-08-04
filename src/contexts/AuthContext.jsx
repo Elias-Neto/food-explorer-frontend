@@ -1,37 +1,26 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from "react"
 
-import { toast } from 'react-toastify'
-
-import api from '../services/api'
+import { api } from '../services/api'
 
 const AuthContext = createContext({})
 
+export const useAuth = () => useContext(AuthContext)
+
 const AuthProvider = ({ children }) => {
   const [data, setData] = useState({})
+  const login = async (formData) => {
+    const response = await api.post("/sessions", formData)
+    const { user, token } = response.data
 
-  async function signIn({ email, password }) {
-    try {
-      const response = await api.post('/sessions', { email, password })
-      const { user, token } = response.data
+    localStorage.setItem('@foodExplorer:user', JSON.stringify(user))
+    localStorage.setItem('@foodExplorer:token', token)
 
-      user.isAdmin = user.isAdmin === 1
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
-      localStorage.setItem('@foodExplorer:user', JSON.stringify(user))
-      localStorage.setItem('@foodExplorer:token', token)
-
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`
-
-      setData({ user, token })
-    } catch (error) {
-      if (error.response) {
-        toast.error(error.response.data.message)
-      } else {
-        toast.error('Não foi possível entrar')
-      }
-    }
+    setData({ user, token })
   }
 
-  async function signOut() {
+  const logout = async () => {
     localStorage.removeItem('@foodExplorer:user')
     localStorage.removeItem('@foodExplorer:token')
 
@@ -39,25 +28,25 @@ const AuthProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    const user = localStorage.getItem("@foodExplorer:user")
-    const token = localStorage.getItem("@foodExplorer:token")
+    const user = localStorage.getItem('@foodExplorer:user')
+    const token = localStorage.getItem('@foodExplorer:token')
 
     if (user && token) {
-      api.defaults.headers.common["Authorization"] = `Bearrer ${token}`
-
-      setData({
-        token,
-        user: JSON.parse(user),
-      })
+      api.defaults.headers.common['Authorization'] = `Bearrer ${token}`
     }
+
+    setData({
+      user: JSON.parse(user),
+      token: token
+    })
   }, [])
 
   return (
     <AuthContext.Provider
       value={{
-        signIn,
-        signOut,
         user: data.user,
+        login,
+        logout
       }}
     >
       {children}
@@ -65,9 +54,4 @@ const AuthProvider = ({ children }) => {
   )
 }
 
-const useAuth = () => {
-  const context = useContext(AuthContext)
-  return context
-}
-
-export { AuthProvider, useAuth }
+export { AuthProvider }

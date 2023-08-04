@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { toast } from 'react-toastify'
@@ -11,12 +11,13 @@ import { Container, Form } from './styles'
 
 import logo from '../../assets/logo.svg'
 
-import { useSignIn } from '../../hooks/authentication/useSignIn'
+import { useCreateUser } from '../../hooks/dataCreating/useCreateUser'
 
-const SignIn = () => {
+const SignUp = () => {
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { signIn, isLoading } = useSignIn()
+  const { isLoading, createUser } = useCreateUser()
 
   const navigate = useNavigate()
 
@@ -25,19 +26,23 @@ const SignIn = () => {
       if (error.response) {
         return toast.error(error.response.data.message)
       } else {
-        return toast.error('Não foi possível entrar na sua conta.')
+        return toast.error('Não foi possível criar sua conta.')
       }
     }
   }
 
   const handleSuccess = () => {
-    toast.success('Você entrou na sua conta com sucesso!')
+    setEmail('')
+    setPassword('')
+    setName('')
+
+    toast.success('Sua conta foi criada com sucesso!')
 
     navigate('/')
   }
 
-  async function handleSignIn() {
-    if (!email || !password) {
+  async function handleSignUp() {
+    if (!name || !email || !password) {
       return toast.warn('Preencha todos os campos.')
     }
 
@@ -49,9 +54,8 @@ const SignIn = () => {
       return toast.warn('Informe uma senha válida.')
     }
 
-    await signIn({ email, password }, handleSuccess, handleError)
+    await createUser({ name, email, password }, handleSuccess, handleError)
   }
-
 
   return (
     <Container>
@@ -61,7 +65,17 @@ const SignIn = () => {
       </h1>
 
       <Form onSubmit={(e) => e.preventDefault()}>
-        <h2>Faça login</h2>
+        <h2>Crie sua conta</h2>
+
+        <Input
+          type='text'
+          id='name'
+          label='Seu nome'
+          placeholder='Maria da Silva'
+          required
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
 
         <Input
           type='email'
@@ -84,12 +98,16 @@ const SignIn = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <Button title='Entrar' onClick={handleSignIn} disabled={isLoading} />
+        <Button
+          title='Criar conta'
+          onClick={handleSignUp}
+          disabled={isLoading}
+        />
 
-        <TextLink name='Criar uma conta' to='/register' />
+        <TextLink name='Já tenho uma conta' to={-1} />
       </Form>
     </Container>
   )
 }
 
-export { SignIn }
+export { SignUp }

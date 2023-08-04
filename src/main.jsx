@@ -19,7 +19,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <AuthProvider>
         <Routes />
         <ToastContainer
-          position="top-right"
+          position='top-right'
           autoClose={5000}
           hideProgressBar={false}
           newestOnTop={false}
@@ -28,7 +28,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           pauseOnFocusLoss
           draggable
           pauseOnHover
-          theme="colored"
+          theme='colored'
         />
       </AuthProvider>
     </ThemeProvider>

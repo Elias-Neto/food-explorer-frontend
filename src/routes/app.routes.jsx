@@ -16,17 +16,17 @@ export function AppRoutes() {
 
   return (
     <Routes>
-      <Route path="/" element={<span>Home Page</span>} />
-      {/* <Route path="/dish/:id" element={<Dish />} />
-      <Route path="/requests" element={<Requests />} />
+      <Route path='/' element={<span>Home Page</span>} />
+      {/* <Route path='/dish/:id' element={<Dish />} />
+      <Route path='/requests' element={<Requests />} />
 
-      {!user.isAdmin && <Route path="/payment" element={<Payment />} />}
+      {!user.isAdmin && <Route path='/payment' element={<Payment />} />}
       {!user.isAdmin && (
-        <Route path="/payment-only" element={<PaymentOnly />} />
+        <Route path='/payment-only' element={<PaymentOnly />} />
       )}
-      {!user.isAdmin && <Route path="/favorites" element={<Favorites />} />}
-      {user.isAdmin && <Route path="/new" element={<New />} />}
-      {user.isAdmin && <Route path="/edit/:id" element={<Edit />} />} */}
+      {!user.isAdmin && <Route path='/favorites' element={<Favorites />} />}
+      {user.isAdmin && <Route path='/new' element={<New />} />}
+      {user.isAdmin && <Route path='/edit/:id' element={<Edit />} />} */}
     </Routes>
   )
 }
